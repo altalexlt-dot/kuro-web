@@ -1,17 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kuro - Panel de Administración</title>
-  <!-- Incluye el script de Netlify Identity para el login -->
-  <script src="[https://identity.netlify.com/v1/netlify-identity-widget.js](https://identity.netlify.com/v1/netlify-identity-widget.js)"></script>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
-  <!-- Incluye el script de Decap CMS -->
-  <script src="[https://unpkg.com/decap-cms](https://unpkg.com/decap-cms)@^3.0.0/dist/decap-cms.js"></script>
-  
-  <!-- Script para redirigir tras hacer login -->
+  <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
   <script>
     if (window.netlifyIdentity) {
       window.netlifyIdentity.on("init", user => {
