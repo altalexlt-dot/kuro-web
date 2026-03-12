@@ -1,0 +1,55 @@
+backend:
+  name: git-gateway
+  branch: main # Rama de tu repositorio en GitHub
+
+media_folder: "images/uploads" # Dónde se guardan las fotos nuevas
+public_folder: "/images/uploads"
+
+collections:
+  - name: "platos"
+    label: "La Carta (Platos)"
+    folder: "data/platos" # Dónde se guardan los datos de cada plato
+    create: true # Permite añadir nuevos
+    slug: "{{year}}-{{month}}-{{slug}}" # Nombre del archivo generado
+    fields:
+      - {label: "ID del Plato", name: "id", widget: "string", hint: "Ej: e1, s2, nc3. Debe ser único."}
+      - {label: "Categoría", name: "cat", widget: "select", options: ["Entrantes", "Sashimi", "Nigiris Clásicos", "Nigiris Flambeados", "Makis", "Uramaki", "Platos Calientes", "Postres"]}
+      - {label: "Imagen", name: "img", widget: "image"}
+      - {label: "Precio", name: "price", widget: "string", hint: "Ej: 16,50€"}
+      
+      # Traducciones del Nombre
+      - label: "Nombre del Plato"
+        name: "name"
+        widget: "object"
+        fields:
+          - {label: "Español", name: "es", widget: "string"}
+          - {label: "Català", name: "ca", widget: "string"}
+          - {label: "English", name: "en", widget: "string"}
+          - {label: "Français", name: "fr", widget: "string"}
+          
+      # Traducciones de la Descripción
+      - label: "Descripción"
+        name: "desc"
+        widget: "object"
+        fields:
+          - {label: "Español", name: "es", widget: "text"}
+          - {label: "Català", name: "ca", widget: "text"}
+          - {label: "English", name: "en", widget: "text"}
+          - {label: "Français", name: "fr", widget: "text"}
+          
+      # Macros
+      - label: "Perfil Nutricional"
+        name: "mac"
+        widget: "object"
+        fields:
+          - {label: "Calorías (Kcal)", name: "kc", widget: "number"}
+          - {label: "Proteínas (g)", name: "pr", widget: "number"}
+          - {label: "Carbohidratos (g)", name: "cb", widget: "number"}
+          - {label: "Grasas (g)", name: "ft", widget: "number"}
+          
+      # Alérgenos (Selección múltiple)
+      - label: "Alérgenos"
+        name: "alg"
+        widget: "select"
+        multiple: true
+        options: ["Gluten", "Altramuces", "Apio", "Cacahuetes", "Crustáceos", "Frutos secos", "Sésamo", "Huevos", "Lácteos", "Moluscos", "Mostaza", "Pescado", "Soja", "Sulfitos"]
