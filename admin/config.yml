@@ -1,7 +1,8 @@
 backend:
   name: git-gateway
-  branch: main # Rama de tu repositorio en GitHub
-
+  branch: main
+  identity_url: "https://unique-piroshki-4bfb69.netlify.app/.netlify/identity"
+  gateway_url: "https://unique-piroshki-4bfb69.netlify.app/.netlify/git"
 media_folder: "images/uploads" # Dónde se guardan las fotos nuevas
 public_folder: "/images/uploads"
 
