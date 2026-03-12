@@ -1,56 +1,100 @@
 backend:
   name: git-gateway
   branch: main
-  identity_url: "https://unique-piroshki-4bfb69.netlify.app/.netlify/identity"
-  gateway_url: "https://unique-piroshki-4bfb69.netlify.app/.netlify/git"
-media_folder: "images/uploads" # Dónde se guardan las fotos nuevas
+
+media_folder: "images/uploads"
 public_folder: "/images/uploads"
+
+# Guardar como JSON, no como Markdown
+extension: json
+format: json
 
 collections:
   - name: "platos"
     label: "La Carta (Platos)"
-    folder: "data/platos" # Dónde se guardan los datos de cada plato
-    create: true # Permite añadir nuevos
-    slug: "{{year}}-{{month}}-{{slug}}" # Nombre del archivo generado
+    folder: "data/platos"
+    create: true
+    delete: true
+    extension: json
+    format: json
+    slug: "{{fields.id}}"
     fields:
-      - {label: "ID del Plato", name: "id", widget: "string", hint: "Ej: e1, s2, nc3. Debe ser único."}
-      - {label: "Categoría", name: "cat", widget: "select", options: ["Entrantes", "Sashimi", "Nigiris Clásicos", "Nigiris Flambeados", "Makis", "Uramaki", "Platos Calientes", "Postres"]}
-      - {label: "Imagen", name: "img", widget: "image"}
-      - {label: "Precio", name: "price", widget: "string", hint: "Ej: 16,50€"}
-      
-      # Traducciones del Nombre
+      - { label: "ID del Plato", name: "id", widget: "string", hint: "Ej: e1, s2, nc3 — debe ser único" }
+      - label: "Categoría"
+        name: "cat"
+        widget: "select"
+        options:
+          - { label: "Entrantes",          value: "Entrantes" }
+          - { label: "Sashimi",            value: "Sashimi" }
+          - { label: "Nigiris Clásicos",   value: "Nigiris Clásicos" }
+          - { label: "Nigiris Flambeados", value: "Nigiris Flambeados" }
+          - { label: "Makis",              value: "Makis" }
+          - { label: "Uramaki",            value: "Uramaki" }
+          - { label: "Platos Calientes",   value: "Platos Calientes" }
+          - { label: "Postres",            value: "Postres" }
+      - { label: "Imagen URL", name: "img", widget: "image" }
+      - { label: "Precio (ej: 12,50€)", name: "price", widget: "string" }
+
       - label: "Nombre del Plato"
         name: "name"
         widget: "object"
         fields:
-          - {label: "Español", name: "es", widget: "string"}
-          - {label: "Català", name: "ca", widget: "string"}
-          - {label: "English", name: "en", widget: "string"}
-          - {label: "Français", name: "fr", widget: "string"}
-          
-      # Traducciones de la Descripción
+          - { label: "Español",  name: "es", widget: "string" }
+          - { label: "Català",   name: "ca", widget: "string" }
+          - { label: "English",  name: "en", widget: "string" }
+          - { label: "Français", name: "fr", widget: "string" }
+
       - label: "Descripción"
         name: "desc"
         widget: "object"
         fields:
-          - {label: "Español", name: "es", widget: "text"}
-          - {label: "Català", name: "ca", widget: "text"}
-          - {label: "English", name: "en", widget: "text"}
-          - {label: "Français", name: "fr", widget: "text"}
-          
-      # Macros
+          - { label: "Español",  name: "es", widget: "text" }
+          - { label: "Català",   name: "ca", widget: "text" }
+          - { label: "English",  name: "en", widget: "text" }
+          - { label: "Français", name: "fr", widget: "text" }
+
+      - label: "Ingredientes"
+        name: "ing"
+        widget: "list"
+        fields:
+          - label: "Nombre"
+            name: "n"
+            widget: "object"
+            fields:
+              - { label: "Español",  name: "es", widget: "string" }
+              - { label: "Català",   name: "ca", widget: "string" }
+              - { label: "English",  name: "en", widget: "string" }
+              - { label: "Français", name: "fr", widget: "string" }
+          - { label: "Cantidad (ej: 180g)", name: "q", widget: "string" }
+          - { label: "¿Es salsa/aliño?", name: "sauce", widget: "boolean", default: false, required: false }
+
       - label: "Perfil Nutricional"
         name: "mac"
         widget: "object"
         fields:
-          - {label: "Calorías (Kcal)", name: "kc", widget: "number"}
-          - {label: "Proteínas (g)", name: "pr", widget: "number"}
-          - {label: "Carbohidratos (g)", name: "cb", widget: "number"}
-          - {label: "Grasas (g)", name: "ft", widget: "number"}
-          
-      # Alérgenos (Selección múltiple)
+          - { label: "Calorías (Kcal)", name: "kc", widget: "number" }
+          - { label: "Proteínas (g)",   name: "pr", widget: "number" }
+          - { label: "Carbohidratos (g)", name: "cb", widget: "number" }
+          - { label: "Grasas (g)",      name: "ft", widget: "number" }
+
       - label: "Alérgenos"
         name: "alg"
         widget: "select"
         multiple: true
-        options: ["Gluten", "Altramuces", "Apio", "Cacahuetes", "Crustáceos", "Frutos secos", "Sésamo", "Huevos", "Lácteos", "Moluscos", "Mostaza", "Pescado", "Soja", "Sulfitos"]
+        required: false
+        default: []
+        options:
+          - { label: "Gluten",       value: "Gluten" }
+          - { label: "Altramuces",   value: "Altramuces" }
+          - { label: "Apio",         value: "Apio" }
+          - { label: "Cacahuetes",   value: "Cacahuetes" }
+          - { label: "Crustáceos",   value: "Crustáceos" }
+          - { label: "Frutos secos", value: "Frutos secos" }
+          - { label: "Sésamo",       value: "Sésamo" }
+          - { label: "Huevos",       value: "Huevos" }
+          - { label: "Lácteos",      value: "Lácteos" }
+          - { label: "Moluscos",     value: "Moluscos" }
+          - { label: "Mostaza",      value: "Mostaza" }
+          - { label: "Pescado",      value: "Pescado" }
+          - { label: "Soja",         value: "Soja" }
+          - { label: "Sulfitos",     value: "Sulfitos" }
